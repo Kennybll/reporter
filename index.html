@@ -21,6 +21,9 @@
   <h6 id="notify"></h6>
   <script src="./scorum.js"></script>
   <script type="text/javascript">
+    scorum.api.setOptions({ url: 'http://prodnet.scorum.com' });
+    scorum.config.set('address_prefix', 'SCR');
+    scorum.config.set('chain_id', 'db4007d45f04c1403a7e66a5c66b5b1cdfc2dde8b5335d1d2f116d592ca3dbb1');
     function vote() {
       var wif = document.getElementById('wif').value;
       var link = document.getElementById('link').value;
@@ -28,7 +31,7 @@
       var authorPermlink = link.match(/\/@(.)*\/(.)*/gi)[0].split('/');
       var author = authorPermlink[1].substring(1);
       var permlink = authorPermlink[2];
-      var weight = document.getElementById('slider').value * -1;
+      var weight = document.getElementById('slider').value * -1 * 100;
       var notify = document.getElementById('notify');
       scorum.broadcast.vote(wif, account, author, permlink, weight, function(err, result) {
         console.log(err, result);
