@@ -16,6 +16,9 @@
   <input type="text" id="account" value="reporter" />
   <h3>Private Posting Key</h3>
   <input type="password" id="wif" />
+  <br><br>
+  <button onclick="vote()">Flag</button>
+  <h6 id="notify"></h6>
   <script src="./scorum.js"></script>
   <script type="text/javascript">
     function vote() {
@@ -26,8 +29,11 @@
       var author = authorPermlink[1].substring(1);
       var permlink = authorPermlink[2];
       var weight = document.getElementById('slider').value * -1;
+      var notify = document.getElementById('notify');
       scorum.broadcast.vote(wif, account, author, permlink, weight, function(err, result) {
         console.log(err, result);
+        if(err) notify.innerText = err;
+        if(!err && result) notify.innerText = "Voted";
       });
     }
     function change() {
