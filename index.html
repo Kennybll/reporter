@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flagging Tool</title>
+</head>
+<body>
+  <h3>Post Link (https://scorum.com/en-us/category/@author/permlink)</h3>
+  <input type="text" id="link" />
+  <h3>Percentage</h3>
+  <input type="range" min="1" max="100" value="100" step="1" id="slider" onchange="change()" />
+  <span id="percent"></span>
+  <h3>Account Name</h3>
+  <input type="text" id="account" value="reporter" />
+  <h3>Private Posting Key</h3>
+  <input type="password" id="wif" />
+  <script src="./scorum.js"></script>
+  <script type="text/javascript">
+    function vote() {
+      var wif = document.getElementById('wif').value;
+      var link = document.getElementById('link').value;
+      var account = document.getElementById('account').value;
+      var authorPermlink = link.match(/\/@(.)*\/(.)*/gi)[0].split('/');
+      var author = authorPermlink[1].substring(1);
+      var permlink = authorPermlink[2];
+      var weight = document.getElementById('slider').value * -1;
+      scorum.broadcast.vote(wif, account, author, permlink, weight, function(err, result) {
+        console.log(err, result);
+      });
+    }
+    function change() {
+      var percent = document.getElementById('percent');
+      var slider = document.getElementById('slider');
+      percent.innerText = slider.value * -1;
+    }
+    change();
+  </script>
+</body>
+</html>
