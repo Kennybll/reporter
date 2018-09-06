@@ -10,7 +10,7 @@
   <h3>Post Link (https://scorum.com/en-us/category/@author/permlink)</h3>
   <input type="text" id="link" />
   <h3>Percentage</h3>
-  <input type="range" min="1" max="100" value="100" step="1" id="slider" onchange="change()" />
+  <input type="range" min="0" max="10000" value="10000" step="100" id="slider" onchange="change()" />
   <span id="percent"></span>
   <h3>Account Name</h3>
   <input type="text" id="account" value="reporter" />
@@ -42,7 +42,7 @@
     function change() {
       var percent = document.getElementById('percent');
       var slider = document.getElementById('slider');
-      percent.innerText = slider.value * -1;
+      percent.innerText = (slider.value * -1) / 100;
     }
     change();
   </script>
